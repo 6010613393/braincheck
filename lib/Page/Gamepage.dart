@@ -10,6 +10,7 @@ Random random = new Random();
 
 class _GamepageState extends State<Gamepage> {
   var count = 1;
+  bool pressed = true;
   var result = '<< ผลลัพธ์ >>';
 
   List<List<String>> matrix = [
@@ -48,100 +49,102 @@ class _GamepageState extends State<Gamepage> {
       ),
       body: Center(
           child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Row(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              _buildElement(0, 0),
-              _buildElement(0, 1),
-              _buildElement(0, 2),
-              _buildElement(0, 3),
-            ],
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              _buildElement(1, 0),
-              _buildElement(1, 1),
-              _buildElement(1, 2),
-              _buildElement(1, 3),
-            ],
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              _buildElement(2, 0),
-              _buildElement(2, 1),
-              _buildElement(2, 2),
-              _buildElement(2, 3),
-            ],
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              _buildElement(3, 0),
-              _buildElement(3, 1),
-              _buildElement(3, 2),
-              _buildElement(3, 3),
-            ],
-          ),
-          SizedBox(
-            height: 50,
-          ),
-          Text(result),
-          SizedBox(
-            height: 50,
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              RaisedButton(
-                  child: Text('Back to Menu'),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  }),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  _buildElement(0, 0),
+                  _buildElement(0, 1),
+                  _buildElement(0, 2),
+                  _buildElement(0, 3),
+                ],
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  _buildElement(1, 0),
+                  _buildElement(1, 1),
+                  _buildElement(1, 2),
+                  _buildElement(1, 3),
+                ],
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  _buildElement(2, 0),
+                  _buildElement(2, 1),
+                  _buildElement(2, 2),
+                  _buildElement(2, 3),
+                ],
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  _buildElement(3, 0),
+                  _buildElement(3, 1),
+                  _buildElement(3, 2),
+                  _buildElement(3, 3),
+                ],
+              ),
               SizedBox(
-                width: 20,
+                height: 50,
               ),
-              RaisedButton(
-                child: Text('Restart Game'),
-                onPressed: () {
-                  setState(() {
-                    _randomMatrix();
-                    _randomMatrix32();
-                    count = 1;
-                    result = '<< ผลลัพธ์ >>';
-                  });
-                },
+              Text(result),
+              SizedBox(
+                height: 50,
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  RaisedButton(
+                      child: Text('Back to Menu'),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      }),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  RaisedButton(
+                    child: Text('Restart Game'),
+                    onPressed: () {
+                      setState(() {
+                        _randomMatrix();
+                        _randomMatrix32();
+                        count = 1;
+                        result = '<< ผลลัพธ์ >>';
+                      });
+                    },
+                  ),
+                ],
               ),
             ],
-          ),
-        ],
-      )),
+          )),
     );
   }
 
   _buildElement(int i, int j) {
     return GestureDetector(
-        onTap: () {
-          _afterClicked(i, j, count);
-          if(count==33){
-            result = "Completed to check 1 to 32!";
-          }
-        },
-        child: Container(
-          width: 70.0,
-          decoration: BoxDecoration(
-              shape: BoxShape.rectangle,
-              border: Border.all(color: Colors.black)),
-          child: Center(
+      onTap: () {
+        _afterClicked(i, j, count);
+        if (count == 33) {
+          result = "Completed to check 1 to 32!";
+        }
+      },
+      child: Container(
+        width: 70.0,
+        decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            border: Border.all(color: Colors.black)),
+        child: Center(
             child: Text(
-              matrix[i][j],
-              style: TextStyle(fontSize: 60.0),
-            ),
-          ),
-        ));
+                matrix[i][j],
+                style: count<=17
+                ? TextStyle(fontSize: 60.0, color: Colors.black54)
+                : TextStyle(fontSize: 60.0, color: Colors.red),
+      ),
+    ),)
+    );
   }
 
   _randomMatrix() {
@@ -225,7 +228,6 @@ class _GamepageState extends State<Gamepage> {
         matrix[i][j] = initmatrix[i][j];
         count++;
       }
-      print(count);
     });
   }
 }
